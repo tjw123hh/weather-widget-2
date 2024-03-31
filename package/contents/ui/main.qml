@@ -138,7 +138,7 @@ PlasmoidItem {
 
 
 
-    property bool useOnlineWeatherData: false
+    property bool useOnlineWeatherData: true
 
 
     /* Data Models */
