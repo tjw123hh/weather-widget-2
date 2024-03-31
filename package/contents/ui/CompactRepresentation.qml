@@ -28,28 +28,30 @@ Item {
 
     anchors.fill: parent
 
-    readonly property int widgetWidth: compactRepresentation.width
-    readonly property int widgetHeight: compactRepresentation.height
-
-    readonly property int minWidgetSize: Math.min(widgetWidth,widgetHeight)
-    readonly property int maxWidgetSize: Math.max(widgetWidth,widgetHeight)
+    property int defaultWidgetSize: -1
+    property int layoutType: main.layoutType
 
     CompactItem {
         id: compactItem
     }
+    // Rectangle {
+    //     id: red
+    //     anchors.fill: parent
+    //     opacity: 0.5
+    //     color: "red"
+    // }
 
-    Layout.preferredWidth: ((layoutType === 0)) ? maxWidgetSize : minWidgetSize
+    Layout.preferredWidth: ((layoutType === 0) && (! main.vertical) && (! main.onDesktop)) ? defaultWidgetSize * 1.6 : defaultWidgetSize
+    Layout.preferredHeight: ((layoutType === 1) && (main.vertical) && (! main.onDesktop)) ? defaultWidgetSize * 1.6 : defaultWidgetSize
 
     PlasmaComponents.Label {
         id: lastReloadedNotifier
 
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: - widgetHeight * 0.05
+        anchors.bottomMargin: - defaultWidgetSize * 0.05
         verticalAlignment: Text.AlignBottom
-        width: widgetWidth
-        height: widgetHeight * 0.2
-        elide: Text.ElideRight
+        width: parent.width
         fontSizeMode: Text.Fit
         font.pointSize: -1
         color: Kirigami.Theme.highlightColor
@@ -69,6 +71,7 @@ Item {
         visible: (lastReloadedText.visible === true)
     }
 
+
     MouseArea {
         anchors.fill: parent
 
@@ -85,19 +88,30 @@ Item {
         }
 
         onClicked: (mouse)=> {
-            if (mouse.button === Qt.MiddleButton) {
-                loadingData.failedAttemptCount = 0
-                main.loadDataFromInternet()
-            } else {
-                dbgprint("CompactRepresentation")
-                let t = main.expanded
-                if (t) {
-                    dbgprint("Closing FullRepresentation")
-                } else {
-                    dbgprint("Opening FullRepresentation")
-                }
-                main.expanded = ! main.expanded
-            }
+                       if (mouse.button === Qt.MiddleButton) {
+                           loadingData.failedAttemptCount = 0
+                           main.loadDataFromInternet()
+                       } else {
+                           main.expanded = !main.expanded
+                           lastReloadedNotifier.visible = !main.expanded
+                       }
+                   }
+
+        PlasmaCore.ToolTipArea {
+            id: toolTipArea
+            anchors.fill: parent
+            active: !plasmoid.expanded
+            interactive: true
+            mainText: main.currentPlace.alias
+            subText:  main.toolTipSubText
+            textFormat: Text.RichText
+            icon: Qt.resolvedUrl('../images/weather-widget.svg')
         }
+
+    }
+    Component.onCompleted: {
+         if ((defaultWidgetSize === -1) && ( compactRepresentation.width > 0 ||  compactRepresentation.height)) {
+            defaultWidgetSize = Math.min(compactRepresentation.width, compactRepresentation.height)
+         }
     }
 }

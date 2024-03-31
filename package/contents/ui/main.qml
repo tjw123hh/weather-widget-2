@@ -63,10 +63,10 @@ PlasmoidItem {
     compactRepresentation: inTray ? crInTray : cr
     fullRepresentation: inTray ? frInTray : fr
 
-    switchWidth: 256
-    switchHeight: 128
+    switchWidth: inTray ? 256 : 0
+    switchHeight: inTray ? 256 : 0
 
-    preferredRepresentation: inTray ? undefined: compactRepresentation
+    preferredRepresentation: compactRepresentation
 
     property bool vertical: (plasmoid.formFactor === PlasmaCore.Types.Vertical)
     property bool onDesktop: (plasmoid.location === PlasmaCore.Types.Desktop || plasmoid.location === PlasmaCore.Types.Floating)
@@ -138,7 +138,7 @@ PlasmoidItem {
 
 
 
-    property bool useOnlineWeatherData: true
+    property bool useOnlineWeatherData: false
 
 
     /* Data Models */

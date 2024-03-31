@@ -26,18 +26,13 @@ import "../code/unit-utils.js" as UnitUtils
 
 Item {
     id: compactItem
+
     anchors.fill: parent
 
-    property int layoutType: (main.inTray) ? 2 : main.layoutType
+    property int layoutType: main.layoutType
 
-    property double parentWidth: parent.width
-    property double parentHeight: parent.height
-
-    property double widgetWidth: 0
     property int widgetFontSize: plasmoid.configuration.widgetFontSize
     property string widgetFontName: plasmoid.configuration.widgetFontName
-
-    property double fontPixelSize: minWidgetSize * (layoutType === 2 ? 0.95 : 0.8)
 
     property string iconNameStr: main.iconNameStr.length > 0 ? main.iconNameStr : "\uf07b"
     property string temperatureStr: main.temperatureStr.length > 0 ? main.temperatureStr : "--"
@@ -48,101 +43,71 @@ Item {
     }
     onWidgetFontNameChanged: {
         temperatureText.font.family = widgetFontName
+    }
 
+    function reLayout() {
+        let iconScale = (main.inPanel) ? 0.9 : 0.75
+        let temperatureScale = ((main.vertical && layoutType === 0)||(! main.vertical && layoutType === 1) || (main.onDesktop)) ? 0.5 : 0.8
+        temperatureText.anchors.left = [compactItem.left, compactItem.left, undefined][layoutType]
+        temperatureText.anchors.right = [undefined, compactItem.right, compactItem.right][layoutType]
+        temperatureText.anchors.top = [compactItem.top, compactItem.top, undefined][layoutType]
+        temperatureText.anchors.bottom = [compactItem.bottom, undefined, compactItem.bottom][layoutType]
+        temperatureText.width = [parent.width * temperatureScale, parent.width, parent.width * 0.6][layoutType]
+        temperatureText.height = [parent.height , parent.height * temperatureScale, parent.height  * 0.6][layoutType]
+        temperatureText.horizontalAlignment = [Text.AlignRight, Text.AlignHCenter, Text.AlignHCenter][layoutType]
+        temperatureText.verticalAlignment = [Text.AlignVCenter, Text.AlignVCenter, Text.AlignBottom][layoutType]
+        temperatureText.fontSizeMode = (main.onDesktop) ? Text.FixedSize : Text.Fit
+
+        compactWeatherIcon.anchors.left = [temperatureText.right, compactItem.left, compactItem.left][layoutType]
+        compactWeatherIcon.anchors.right = [undefined, compactItem.right, undefined][layoutType]
+        compactWeatherIcon.anchors.top = [compactItem.top, undefined, compactItem.top][layoutType]
+        compactWeatherIcon.anchors.bottom = [compactItem.bottom , compactItem.bottom, compactItem.bottom][layoutType]
+        compactWeatherIcon.width = [parent.width * temperatureScale, parent.width, parent.width * iconScale][layoutType]
+        compactWeatherIcon.height = [parent.height, parent.height * temperatureScale, parent.height * iconScale][layoutType]
+        compactWeatherIcon.horizontalAlignment = [Text.AlignLeft, Text.AlignHCenter, Text.AlignLeft][layoutType]
+        compactWeatherIcon.verticalAlignment = [Text.AlignVCenter, Text.AlignVCenter, Text.AlignTop][layoutType]
+        compactWeatherIcon.fontSizeMode = (main.onDesktop) ? Text.FixedSize : Text.Fit
     }
 
 
+    Component.onCompleted: {
+        if (main.inTray)
+            layoutType = 2
+        layoutTimer2.start()
+    }
+
+    onLayoutTypeChanged: {
+        reLayout()
+    }
+
     PlasmaComponents.Label {
         id: compactWeatherIcon
-        width: {
-            switch (layoutType) {
-                case 0:
-                    return minWidgetSize / 2
-                    break
-                case 1:
-                    return minWidgetSize
-                    break
-                case 2:
-                    return minWidgetSize
-                    break
+        // Rectangle {
+        //     anchors.fill: parent
+        //     opacity: 0.5
+        //     color: "yellow"
+        // }
 
-            }
-        }
-
-        height: {
-            switch (layoutType) {
-                case 0:
-                    return minWidgetSize
-                    break
-                case 1:
-                    return minWidgetSize / 2
-                    break
-                case 2:
-                    return minWidgetSize
-                    break
-
-            }
-        }
-
-        anchors.left: parent.left
-        anchors.leftMargin: (layoutType === 2) ? 0 : layoutType === 1 ? 0 : minWidgetSize / 2
-        anchors.top: parent.top
-        anchors.topMargin: layoutType === 1 ? minWidgetSize / 2 : layoutType === 2 ? 0 : 0
-        // anchors.fill: parent
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        fontSizeMode: (main.inTray) ? Text.Fit : Text.FixedSize
         font.family: 'weathericons'
+        font.pixelSize: widgetFontSize
         text: iconNameStr
-        color: Kirigami.Theme.textColor
-        opacity: ((layoutType === 2) && (! main.inTray)) ? 0.8 : 1
-        font.pixelSize: fontPixelSize
+        opacity: layoutType === 2 ? 0.8 : 1
+        // font.pointSize: -1
+
     }
 
     PlasmaComponents.Label {
         id: temperatureText
-
-        width: {
-            switch (layoutType) {
-                case 0:
-                    return minWidgetSize / 2
-                    break
-                case 1:
-                    return minWidgetSize
-                    break
-                case 2:
-                    return minWidgetSize * 0.75
-                    break
-
-            }
-        }
-
-        height: {
-            switch (layoutType) {
-                case 0:
-                    return minWidgetSize
-                    break
-                case 1:
-                    return minWidgetSize / 2
-                    break
-                case 2:
-                    return minWidgetSize * 0.75
-                    break
-
-            }
-        }
-        anchors.top: (layoutType === 2) ? undefined : parent.top
-        anchors.left: (layoutType === 2) ? undefined : parent.left
-        anchors.right: (layoutType === 2) ? parent.right : undefined
-        anchors.bottom: (layoutType === 2) ? parent.bottom: undefined
-
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        fontSizeMode: layoutType === 1 ? Text.HorizontalFit : Text.VerticalFit
+        // Rectangle {
+        //     anchors.fill: parent
+        //     opacity: 0.5
+        //     color: "blue"
+        // }
 
         text: temperatureStr
-        color: Kirigami.Theme.textColor
-        font.pixelSize: fontPixelSize
+        font.family: widgetFontName
+        font.pixelSize: widgetFontSize
+        // font.pointSize: -1
     }
 
     DropShadow {
@@ -179,6 +144,15 @@ Item {
                 }
             }
         ]
+    }
+    Timer {
+        id: layoutTimer2
+        interval: 200
+        running: false
+        repeat: false
+        onTriggered: {
+            reLayout()
+        }
     }
 }
 

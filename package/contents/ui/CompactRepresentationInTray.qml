@@ -23,11 +23,7 @@ Item {
 
     anchors.fill: parent
 
-    readonly property int widgetWidth: compactRepresentation.width
-    readonly property int widgetHeight: compactRepresentation.height
-
-    readonly property int minWidgetSize: Math.min(widgetWidth,widgetHeight)
-    readonly property int maxWidgetSize: Math.max(widgetWidth,widgetHeight)
+    property int defaultWidgetSize: -1
 
     CompactItem {
         id: compactItem
@@ -48,6 +44,21 @@ Item {
 
             }
             main.expanded = ! main.expanded
+        }
+    }
+    Component.onCompleted: {
+        if (main.inTray)
+            layoutTimer1.start()
+    }
+    Timer {
+        id: layoutTimer1
+        interval: 100
+        running: false
+        repeat: false
+        onTriggered: {
+            if ((defaultWidgetSize === -1) && ( compactRepresentation.width > 0 ||  compactRepresentation.height)) {
+                defaultWidgetSize = Math.min(compactRepresentation.width, compactRepresentation.height)
+            }
         }
     }
 }
