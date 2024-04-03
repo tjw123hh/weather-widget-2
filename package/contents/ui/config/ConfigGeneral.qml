@@ -1180,9 +1180,10 @@ KCM.SimpleKCM {
         }
         standardButtons: Dialog.Ok | Dialog.Cancel
         onAccepted: {
-            if(searchtableView.currentRow > -1) {
-                saveSearchedData.open()
-            }
+            if (searchtableView.selectedRow > -1) {
+                saveSearchedData.rowNumber = searchtableView.selectedRow
+                saveSearchedData.visible = true
+                saveSearchedData.open()            }
         }
         onOpened: {
             let locale = Qt.locale().name.substr(3,2)
