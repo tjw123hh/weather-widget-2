@@ -480,6 +480,18 @@ PlasmoidItem {
 
     }
 
+    onTimezoneTypeChanged: {
+        if (currentPlace.identifier !== "") {
+            dbgprint2('timezoneType changed')
+            cacheData.cacheKey = DataLoader.generateCacheKey(currentPlace.identifier)
+            currentPlace.cacheID = DataLoader.generateCacheKey(currentPlace.identifier)
+            dbgprint("cacheKey for " + currentPlace.identifier + " is: " + currentPlace.cacheID)
+            cacheData.alreadyLoadedFromCache = false
+            loadDataFromInternet()
+            meteogramModelChanged = ! meteogramModelChanged
+        }
+    }
+
     function loadFromCache() {
         dbgprint2("loadFromCache")
         dbgprint('loading from cache, config key: ' + cacheData.cacheKey)
