@@ -63,10 +63,10 @@ PlasmoidItem {
     compactRepresentation: inTray ? crInTray : cr
     fullRepresentation: inTray ? frInTray : fr
 
-    switchWidth: inTray ? 256 : 0
-    switchHeight: inTray ? 256 : 0
+    switchWidth: inTray ? 256 : undefined
+    switchHeight: inTray ? 128 : undefined
 
-    preferredRepresentation: compactRepresentation
+    preferredRepresentation: inTray ? undefined: compactRepresentation
 
     property bool vertical: (plasmoid.formFactor === PlasmaCore.Types.Vertical)
     property bool onDesktop: (plasmoid.location === PlasmaCore.Types.Desktop || plasmoid.location === PlasmaCore.Types.Floating)
