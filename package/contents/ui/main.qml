@@ -257,19 +257,7 @@ PlasmoidItem {
         currentPlace.alias = placeObject.placeAlias
         currentPlace.timezoneID = placeObject.timezoneID
         currentPlace.providerId = placeObject.providerId
-        if (currentPlace.providerId === "metno") {
-            let tzData = TZ.TZData[currentPlace.timezoneID]
-            if (TZ.isDST(tzData.DSTData)){
-                currentPlace.timezoneShortName = tzData.DSTName
-                currentPlace.timezoneOffset = tzData.DSTOffset
-            }
-            else
-                currentPlace.timezoneShortName = tzData.TZName
-                currentPlace.timezoneOffset = tzData.Offset
-        } else {
-            currentPlace.timezoneShortName = "LOCAL"
-        }
-        fullRepresentationAlias=currentPlace.alias
+        currentPlace.provider = setCurrentProviderAccordingId(placeObject.providerId)
 
         if (placeObject.timezoneID === undefined) {
             currentPlace.timezoneID = -1
@@ -277,13 +265,26 @@ PlasmoidItem {
             currentPlace.timezoneID = parseInt(placeObject.timezoneID)
         }
 
+
+        let tzData = TZ.TZData[currentPlace.timezoneID]
+        currentPlace.timezoneShortName = "LOCAL"
+        if (currentPlace.providerId === "metno") {
+            if (TZ.isDST(tzData.DSTData)){
+                currentPlace.timezoneShortName = tzData.DSTName
+                currentPlace.timezoneOffset = parseInt(tzData.DSTOffset)
+            } else {
+                currentPlace.timezoneShortName = tzData.TZName
+                currentPlace.timezoneOffset = parseInt(tzData.Offset)
+            }
+        }
+
+        fullRepresentationAlias = currentPlace.alias
+
+
         cacheData.cacheKey = DataLoader.generateCacheKey(currentPlace.identifier)
         currentPlace.cacheID = DataLoader.generateCacheKey(currentPlace.identifier)
         dbgprint("cacheKey for " + currentPlace.identifier + " is: " + currentPlace.cacheID)
         cacheData.alreadyLoadedFromCache = false
-
-        currentPlace.provider = setCurrentProviderAccordingId(placeObject.providerId)
-
 
         var ok = loadFromCache()
         dbgprint("CACHE " + ok)
@@ -298,9 +299,9 @@ PlasmoidItem {
             dbgprint("still loading")
             return
         }
-        loadingDataComplete=false
+        loadingDataComplete = false
         loadingData.loadingDatainProgress = true
-        loadingData.lastloadingStartTime=dateNow()
+        loadingData.lastloadingStartTime = dateNow()
         loadingData.nextReload = -1
         currentPlace.provider = setCurrentProviderAccordingId(currentPlace.providerId)
         currentPlace.creditLink = currentPlace.provider.getCreditLink(currentPlace.identifier)
@@ -478,8 +479,6 @@ PlasmoidItem {
         setNextPlace(true)
 
     }
-
-
 
     function loadFromCache() {
         dbgprint2("loadFromCache")
