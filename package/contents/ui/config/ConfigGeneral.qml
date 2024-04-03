@@ -1183,7 +1183,8 @@ KCM.SimpleKCM {
             if (searchtableView.selectedRow > -1) {
                 saveSearchedData.rowNumber = searchtableView.selectedRow
                 saveSearchedData.visible = true
-                saveSearchedData.open()            }
+                saveSearchedData.open()
+            }
         }
         onOpened: {
             let locale = Qt.locale().name.substr(3,2)
