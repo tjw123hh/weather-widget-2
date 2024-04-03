@@ -42,7 +42,6 @@ KCM.SimpleKCM {
     }
 
     onCfg_windSpeedTypeChanged: {
-        console.log(cfg_windSpeedType)
         switch (cfg_windSpeedType) {
             case 0:
                 windSpeedTypeRadioMps.checked = true
