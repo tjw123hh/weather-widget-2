@@ -24,136 +24,159 @@ import org.kde.plasma.plasmoid
 import "../code/icons.js" as IconTools
 import "../code/unit-utils.js" as UnitUtils
 
-Item {
-    id: compactItem
 
-    anchors.fill: parent
+GridLayout {
+    id: iconAndText
 
-    property int layoutType: main.layoutType
+    property bool vertical: false
 
-    property int widgetFontSize: plasmoid.configuration.widgetFontSize
-    property string widgetFontName: plasmoid.configuration.widgetFontName
+    columnSpacing: 0
+    rowSpacing: 0
 
-    property string iconNameStr: main.iconNameStr.length > 0 ? main.iconNameStr : "\uf07b"
-    property string temperatureStr: main.temperatureStr.length > 0 ? main.temperatureStr : "--"
+    rows: (layoutType === 0) ? 1 : 2
+    columns: (layoutType === 0) ? 2 : 1
 
-    onWidgetFontSizeChanged: {
-        compactWeatherIcon.font.pixelSize = widgetFontSize
-        temperatureText.font.pixelSize = widgetFontSize
-    }
-    onWidgetFontNameChanged: {
-        temperatureText.font.family = widgetFontName
-    }
+    Item {
+        // Otherwise it takes up too much space while loading
+        visible: temperatureText.text.length > 0
 
-    function reLayout() {
-        let iconScale = (main.inPanel) ? 0.9 : 0.75
-        let temperatureScale = ((main.vertical && layoutType === 0)||(! main.vertical && layoutType === 1) || (main.onDesktop)) ? 0.5 : 0.8
-        temperatureText.anchors.left = [compactItem.left, compactItem.left, undefined][layoutType]
-        temperatureText.anchors.right = [undefined, compactItem.right, compactItem.right][layoutType]
-        temperatureText.anchors.top = [compactItem.top, compactItem.top, undefined][layoutType]
-        temperatureText.anchors.bottom = [compactItem.bottom, undefined, compactItem.bottom][layoutType]
-        temperatureText.width = [parent.width * temperatureScale, parent.width, parent.width * 0.6][layoutType]
-        temperatureText.height = [parent.height , parent.height * temperatureScale, parent.height  * 0.6][layoutType]
-        temperatureText.horizontalAlignment = [Text.AlignRight, Text.AlignHCenter, Text.AlignHCenter][layoutType]
-        temperatureText.verticalAlignment = [Text.AlignVCenter, Text.AlignVCenter, Text.AlignBottom][layoutType]
-        temperatureText.fontSizeMode = (main.onDesktop) ? Text.FixedSize : Text.Fit
+        Layout.alignment: Qt.AlignCenter
 
-        compactWeatherIcon.anchors.left = [temperatureText.right, compactItem.left, compactItem.left][layoutType]
-        compactWeatherIcon.anchors.right = [undefined, compactItem.right, undefined][layoutType]
-        compactWeatherIcon.anchors.top = [compactItem.top, undefined, compactItem.top][layoutType]
-        compactWeatherIcon.anchors.bottom = [compactItem.bottom , compactItem.bottom, compactItem.bottom][layoutType]
-        compactWeatherIcon.width = [parent.width * temperatureScale, parent.width, parent.width * iconScale][layoutType]
-        compactWeatherIcon.height = [parent.height, parent.height * temperatureScale, parent.height * iconScale][layoutType]
-        compactWeatherIcon.horizontalAlignment = [Text.AlignLeft, Text.AlignHCenter, Text.AlignLeft][layoutType]
-        compactWeatherIcon.verticalAlignment = [Text.AlignVCenter, Text.AlignVCenter, Text.AlignTop][layoutType]
-        compactWeatherIcon.fontSizeMode = (main.onDesktop) ? Text.FixedSize : Text.Fit
-    }
+        Layout.fillWidth: iconAndText.vertical
+        Layout.fillHeight: !iconAndText.vertical
+        Layout.minimumWidth: iconAndText.vertical ? 0 : sizehelperText.paintedWidth
+        Layout.maximumWidth: iconAndText.vertical ? Infinity : Layout.minimumWidth
 
+        Layout.minimumHeight: iconAndText.vertical ? sizehelperText.paintedHeight : 0
+        Layout.maximumHeight: iconAndText.vertical ? Layout.minimumHeight : Infinity
 
-    Component.onCompleted: {
-        if (main.inTray)
-            layoutType = 2
-        layoutTimer2.start()
-    }
+        Text {
+            id: sizehelperText
 
-    onLayoutTypeChanged: {
-        reLayout()
-    }
-
-    PlasmaComponents.Label {
-        id: compactWeatherIcon
-        // Rectangle {
-        //     anchors.fill: parent
-        //     opacity: 0.5
-        //     color: "yellow"
-        // }
-
-        font.family: 'weathericons'
-        font.pixelSize: widgetFontSize
-        text: iconNameStr
-        opacity: layoutType === 2 ? 0.8 : 1
-        // font.pointSize: -1
-
-    }
-
-    PlasmaComponents.Label {
-        id: temperatureText
-        // Rectangle {
-        //     anchors.fill: parent
-        //     opacity: 0.5
-        //     color: "blue"
-        // }
-
-        text: temperatureStr
-        font.family: widgetFontName
-        font.pixelSize: widgetFontSize
-        // font.pointSize: -1
-    }
-
-    DropShadow {
-        anchors.fill: temperatureText
-        radius: 3
-        samples: 16
-        spread: 0.8
-        fast: true
-        color: Kirigami.Theme.backgroundColor
-        source: temperatureText
-        visible: layoutType === 2
-    }
-
-    PlasmaComponents.BusyIndicator {
-        id: busyIndicator
-        anchors.fill: parent
-        visible: false
-        running: false
-
-        states: [
-            State {
-                name: 'loading'
-                when: !loadingDataComplete
-
-                PropertyChanges {
-                    target: busyIndicator
-                    visible: true
-                    running: true
-                }
-
-                PropertyChanges {
-                    target: compactItem
-                    opacity: 0.5
-                }
+            font {
+                family: temperatureText.font.family
+                weight: temperatureText.font.weight
+                italic: temperatureText.font.italic
+                pixelSize: iconAndText.vertical ? Kirigami.Units.gridUnit : widgetFontSize // random "big enough" size - this is used as a max pixelSize by the fontSizeMode
             }
-        ]
+            minimumPixelSize: Math.round(Kirigami.Units.gridUnit / 2)
+            fontSizeMode: iconAndText.vertical ? Text.HorizontalFit : Text.VerticalFit
+            wrapMode: Text.NoWrap
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            anchors {
+                leftMargin: Kirigami.Units.smallSpacing
+                rightMargin: Kirigami.Units.smallSpacing
+            }
+            // These magic values are taken from the digital clock, so that the
+            // text sizes here are identical with various clock text sizes
+            height: {
+                const textHeightScaleFactor = (parent.height > 26) ? 0.7 : 0.9;
+                return Math.min (parent.height * textHeightScaleFactor, 3 * Kirigami.Theme.defaultFont.pixelSize);
+            }
+            visible: false
+
+            // pattern to reserve some constant space TODO: improve and take formatting/i18n into account
+            text: "888°"
+        }
+
+        PlasmaComponents.Label {
+            id: temperatureText
+
+            font {
+                weight: Font.Normal
+                family: widgetFontName
+                pixelSize: widgetFontSize
+                pointSize: 0 // we need to unset pointSize otherwise it breaks the Text.Fit size mode
+            }
+            minimumPixelSize: Math.round(Kirigami.Units.gridUnit / 2)
+            fontSizeMode: Text.Fit
+            wrapMode: Text.NoWrap
+
+            height: 0
+            width: 0
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            text: temperatureStr
+            anchors {
+                fill: parent
+                leftMargin: Kirigami.Units.smallSpacing
+                rightMargin: Kirigami.Units.smallSpacing
+            }
+        }
     }
-    Timer {
-        id: layoutTimer2
-        interval: 200
-        running: false
-        repeat: false
-        onTriggered: {
-            reLayout()
+
+
+    Item {
+        // Otherwise it takes up too much space while loading
+        visible: compactWeatherIcon.text.length > 0
+
+        Layout.alignment: Qt.AlignCenter
+
+        Layout.fillWidth: iconAndText.vertical
+        Layout.fillHeight: !iconAndText.vertical
+        Layout.minimumWidth: iconAndText.vertical ? 0 : sizehelperIcon.paintedWidth
+        Layout.maximumWidth: iconAndText.vertical ? Infinity : Layout.minimumWidth
+
+        Layout.minimumHeight: iconAndText.vertical ? sizehelperIcon.paintedHeight : 0
+        Layout.maximumHeight: iconAndText.vertical ? Layout.minimumHeight : Infinity
+
+        Text {
+            id: sizehelperIcon
+
+            font {
+                family: compactWeatherIcon.font.family
+                weight: compactWeatherIcon.font.weight
+                italic: compactWeatherIcon.font.italic
+                pixelSize: iconAndText.vertical ? Kirigami.Units.gridUnit : widgetFontSize // random "big enough" size - this is used as a max pixelSize by the fontSizeMode
+            }
+            minimumPixelSize: Math.round(Kirigami.Units.gridUnit / 2)
+            fontSizeMode: iconAndText.vertical ? Text.HorizontalFit : Text.VerticalFit
+            wrapMode: Text.NoWrap
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            anchors {
+                leftMargin: Kirigami.Units.smallSpacing
+                rightMargin: Kirigami.Units.smallSpacing
+            }
+            // These magic values are taken from the digital clock, so that the
+            // text sizes here are identical with various clock text sizes
+            height: {
+                const textHeightScaleFactor = (parent.height > 26) ? 0.7 : 0.9;
+                return Math.min (parent.height * textHeightScaleFactor, 3 * Kirigami.Theme.defaultFont.pixelSize);
+            }
+            visible: false
+
+            // pattern to reserve some constant space TODO: improve and take formatting/i18n into account
+            text: "XXX"
+        }
+
+        PlasmaComponents.Label {
+            id: compactWeatherIcon
+
+            font {
+                weight: Font.Normal
+                family: 'weathericons'
+                pixelSize: widgetFontSize
+                pointSize: 0 // we need to unset pointSize otherwise it breaks the Text.Fit size mode
+            }
+            minimumPixelSize: Math.round(Kirigami.Units.gridUnit / 2)
+            fontSizeMode: Text.Fit
+            wrapMode: Text.NoWrap
+
+            height: 0
+            width: 0
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            text: iconNameStr
+            anchors {
+                fill: parent
+                leftMargin: Kirigami.Units.smallSpacing
+                rightMargin: Kirigami.Units.smallSpacing
+            }
         }
     }
 }
-
 
