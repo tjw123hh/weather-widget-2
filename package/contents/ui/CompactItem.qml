@@ -28,7 +28,17 @@ import "../code/unit-utils.js" as UnitUtils
 GridLayout {
     id: iconAndText
 
+    anchors.fill: parent
+
     property bool vertical: false
+
+    property int layoutType: main.layoutType
+
+    property int widgetFontSize: plasmoid.configuration.widgetFontSize
+    property string widgetFontName: plasmoid.configuration.widgetFontName
+
+    property string iconNameStr: main.iconNameStr.length > 0 ? main.iconNameStr : "\uf07b"
+    property string temperatureStr: main.temperatureStr.length > 0 ? main.temperatureStr : "--"
 
     columnSpacing: 0
     rowSpacing: 0
@@ -78,7 +88,7 @@ GridLayout {
             visible: false
 
             // pattern to reserve some constant space TODO: improve and take formatting/i18n into account
-            text: "888°"
+            text: "888"
         }
 
         PlasmaComponents.Label {
@@ -101,8 +111,8 @@ GridLayout {
             text: temperatureStr
             anchors {
                 fill: parent
-                leftMargin: Kirigami.Units.smallSpacing
-                rightMargin: Kirigami.Units.smallSpacing
+                //leftMargin: Kirigami.Units.smallSpacing
+                //rightMargin: Kirigami.Units.smallSpacing
             }
         }
     }
@@ -173,8 +183,8 @@ GridLayout {
             text: iconNameStr
             anchors {
                 fill: parent
-                leftMargin: Kirigami.Units.smallSpacing
-                rightMargin: Kirigami.Units.smallSpacing
+                //leftMargin: Kirigami.Units.smallSpacing
+                //rightMargin: Kirigami.Units.smallSpacing
             }
         }
     }
