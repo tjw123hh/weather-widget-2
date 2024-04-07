@@ -29,6 +29,8 @@ Loader {
     anchors.fill: parent
     readonly property bool vertical: (Plasmoid.formFactor == PlasmaCore.Types.Vertical)
 
+    property bool showLastReloadedTime: plasmoid.configuration.showLastReloadedTime
+
     property int layoutType: main.layoutType
     property int defaultWidgetSize: -1
 
@@ -116,22 +118,31 @@ Loader {
         hoverEnabled: true
 
         onEntered: {
-            lastReloadedNotifier.visible = !plasmoid.expanded
+            if (showLastReloadedTime)
+            {
+                lastReloadedNotifier.visible = !plasmoid.expanded
+            }
         }
 
         onExited: {
-            lastReloadedNotifier.visible = false
+            if (showLastReloadedTime)
+            {
+                lastReloadedNotifier.visible = false
+            }
         }
 
         onClicked: (mouse)=> {
-                       if (mouse.button === Qt.MiddleButton) {
-                           loadingData.failedAttemptCount = 0
-                           main.loadDataFromInternet()
-                       } else {
-                           main.expanded = !main.expanded
-                           lastReloadedNotifier.visible = !main.expanded
-                       }
-                   }
+            if (mouse.button === Qt.MiddleButton) {
+                loadingData.failedAttemptCount = 0
+                main.loadDataFromInternet()
+            } else {
+                main.expanded = !main.expanded
+                if (showLastReloadedTime)
+                {
+                    lastReloadedNotifier.visible = !main.expanded
+                }
+            }
+        }
 
         PlasmaCore.ToolTipArea {
             id: toolTipArea

@@ -162,6 +162,10 @@ msgid "Widget font style"
 msgstr "Шрифт виджета"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
+msgid "Show last reloaded time"
+msgstr "Показать последнее обновление"
+
+#: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "Widget font size"
 msgstr "Размер шрифта виджета"
 

@@ -11,19 +11,21 @@ KCM.SimpleKCM {
     property alias cfg_inTrayActiveTimeoutSec: inTrayActiveTimeoutSec.value
     property string cfg_widgetFontName: plasmoid.configuration.widgetFontName
     property string cfg_widgetFontSize: plasmoid.configuration.widgetFontSize
+    property alias cfg_showLastReloadedTime: showLastReloadedTime.checked
+
 
     onCfg_layoutTypeChanged: {
         switch (cfg_layoutType) {
-        case 0:
-            layoutTypeGroup.checkedButton = layoutTypeRadioHorizontal;
-            break;
-        case 1:
-            layoutTypeGroup.checkedButton = layoutTypeRadioVertical;
-            break;
-        case 2:
-            layoutTypeGroup.checkedButton = layoutTypeRadioCompact;
-            break;
-        default:
+            case 0:
+                layoutTypeGroup.checkedButton = layoutTypeRadioHorizontal;
+                break;
+            case 1:
+                layoutTypeGroup.checkedButton = layoutTypeRadioVertical;
+                break;
+            case 2:
+                layoutTypeGroup.checkedButton = layoutTypeRadioCompact;
+                break;
+            default:
         }
     }
 
@@ -178,6 +180,23 @@ KCM.SimpleKCM {
                 }
             }
         }
+        Item {
+            width: 2
+            height: 20
+            Layout.columnSpan: 3
+        }
+
+        Label {
+            text: i18n("Show last reloaded time") + ":"
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+        }
+
+        CheckBox {
+            id: showLastReloadedTime
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignLeft
+        }
+
         Item {
             width: 2
             height: 20
