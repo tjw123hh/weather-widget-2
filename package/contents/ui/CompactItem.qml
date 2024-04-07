@@ -88,7 +88,7 @@ GridLayout {
             visible: false
 
             // pattern to reserve some constant space TODO: improve and take formatting/i18n into account
-            text: "888"
+            text: "8888"
         }
 
         PlasmaComponents.Label {
