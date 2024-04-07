@@ -174,7 +174,7 @@ KCM.SimpleKCM {
             onCurrentIndexChanged: {
                 var current = model.get(currentIndex)
                 if (current) {
-                    cfg_widgetFontName = currentIndex === 0 ? "" : current.value
+                    cfg_widgetFontName = currentIndex === 0 ? Kirigami.Theme.defaultFont : current.value
                 }
             }
         }

@@ -33,7 +33,7 @@ Item
     property int layoutType: main.layoutType
 
     property int widgetFontSize: plasmoid.configuration.widgetFontSize
-    property string widgetFontName: plasmoid.configuration.widgetFontName
+    property string widgetFontName: (plasmoid.configuration.widgetFontName === "") ? Kirigami.Theme.defaultFont : plasmoid.configuration.widgetFontName
 
     property string iconNameStr: main.iconNameStr.length > 0 ? main.iconNameStr : "\uf07b"
     property string temperatureStr: main.temperatureStr.length > 0 ? main.temperatureStr : "--"

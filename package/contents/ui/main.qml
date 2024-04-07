@@ -78,7 +78,7 @@ PlasmoidItem {
     property int layoutType: plasmoid.configuration.layoutType
     property bool debugLogging: plasmoid.configuration.debugLogging
     property int inTrayActiveTimeoutSec: plasmoid.configuration.inTrayActiveTimeoutSec
-    property string widgetFontName: plasmoid.configuration.widgetFontName
+    property string widgetFontName: (plasmoid.configuration.widgetFontName === "") ? Kirigami.Theme.defaultFont : plasmoid.configuration.widgetFontName
     property int widgetFontSize: plasmoid.configuration.widgetFontSize
     property int temperatureType: plasmoid.configuration.temperatureType
     property int timezoneType: plasmoid.configuration.timezoneType
