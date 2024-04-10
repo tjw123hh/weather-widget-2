@@ -68,7 +68,7 @@ Loader {
         minimumPixelSize: 1
         color: Kirigami.Theme.highlightColor
         text: lastReloadedText
-        wrapMode: Text.WordWrap
+        elide: Text.ElideRight
         visible: false
     }
 
