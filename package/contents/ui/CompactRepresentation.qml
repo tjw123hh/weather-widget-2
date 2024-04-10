@@ -23,30 +23,41 @@ import Qt5Compat.GraphicalEffects
 import org.kde.kirigami as Kirigami
 
 
-Item {
+Loader {
     id: compactRepresentation
 
     anchors.fill: parent
+    readonly property bool vertical: (Plasmoid.formFactor == PlasmaCore.Types.Vertical)
 
-    property int defaultWidgetSize: -1
+    property bool showLastReloadedTime: plasmoid.configuration.showLastReloadedTime
+
     property int layoutType: main.layoutType
+    property int defaultWidgetSize: -1
 
-    CompactItem {
+    sourceComponent: !(layoutType === 2) ? compactItem : compactItemCompact
+
+    Layout.fillWidth: compactRepresentation.vertical
+    Layout.fillHeight: !compactRepresentation.vertical
+    Layout.minimumWidth: item.Layout.minimumWidth
+    Layout.minimumHeight: item.Layout.minimumHeight
+
+
+    Component {
         id: compactItem
+        CompactItem {
+            vertical: compactRepresentation.vertical
+        }
     }
-    // Rectangle {
-    //     id: red
-    //     anchors.fill: parent
-    //     opacity: 0.5
-    //     color: "red"
-    // }
 
-    Layout.preferredWidth: ((layoutType === 0) && (! main.vertical) && (! main.onDesktop)) ? defaultWidgetSize * 1.6 : defaultWidgetSize
-    Layout.preferredHeight: ((layoutType === 1) && (main.vertical) && (! main.onDesktop)) ? defaultWidgetSize * 1.6 : defaultWidgetSize
+
+    Component {
+        id: compactItemCompact
+        CompactItemCompact {
+        }
+    }
 
     PlasmaComponents.Label {
         id: lastReloadedNotifier
-
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.bottomMargin: - defaultWidgetSize * 0.05
@@ -54,10 +65,37 @@ Item {
         width: parent.width
         fontSizeMode: Text.Fit
         font.pointSize: -1
+        minimumPixelSize: 1
         color: Kirigami.Theme.highlightColor
         text: lastReloadedText
         wrapMode: Text.WordWrap
         visible: false
+    }
+
+
+    PlasmaComponents.BusyIndicator {
+        id: busyIndicator
+        anchors.fill: parent
+        visible: false
+        running: false
+
+        states: [
+            State {
+                name: 'loading'
+                when: !loadingDataComplete
+
+                PropertyChanges {
+                    target: busyIndicator
+                    visible: true
+                    running: true
+                }
+
+                PropertyChanges {
+                    target: compactItem
+                    //opacity: 0.5
+                }
+            }
+        ]
     }
 
     DropShadow {
@@ -80,22 +118,31 @@ Item {
         hoverEnabled: true
 
         onEntered: {
-            lastReloadedNotifier.visible = !plasmoid.expanded
+            if (showLastReloadedTime)
+            {
+                lastReloadedNotifier.visible = !plasmoid.expanded
+            }
         }
 
         onExited: {
-            lastReloadedNotifier.visible = false
+            if (showLastReloadedTime)
+            {
+                lastReloadedNotifier.visible = false
+            }
         }
 
         onClicked: (mouse)=> {
-                       if (mouse.button === Qt.MiddleButton) {
-                           loadingData.failedAttemptCount = 0
-                           main.loadDataFromInternet()
-                       } else {
-                           main.expanded = !main.expanded
-                           lastReloadedNotifier.visible = !main.expanded
-                       }
-                   }
+            if (mouse.button === Qt.MiddleButton) {
+                loadingData.failedAttemptCount = 0
+                main.loadDataFromInternet()
+            } else {
+                main.expanded = !main.expanded
+                if (showLastReloadedTime)
+                {
+                    lastReloadedNotifier.visible = !main.expanded
+                }
+            }
+        }
 
         PlasmaCore.ToolTipArea {
             id: toolTipArea
@@ -107,11 +154,11 @@ Item {
             textFormat: Text.RichText
             icon: Qt.resolvedUrl('../images/weather-widget.svg')
         }
-
     }
+
     Component.onCompleted: {
-         if ((defaultWidgetSize === -1) && ( compactRepresentation.width > 0 ||  compactRepresentation.height)) {
+        if ((defaultWidgetSize === -1) && (compactRepresentation.width > 0 ||  compactRepresentation.height)) {
             defaultWidgetSize = Math.min(compactRepresentation.width, compactRepresentation.height)
-         }
+        }
     }
 }

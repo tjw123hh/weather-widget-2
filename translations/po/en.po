@@ -139,6 +139,10 @@ msgid "Widget font style"
 msgstr ""
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
+msgid "Show last reloaded time"
+msgstr ""
+
+#: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "Widget font size"
 msgstr ""
 
