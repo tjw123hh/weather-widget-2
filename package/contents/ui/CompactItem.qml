@@ -30,7 +30,6 @@ GridLayout {
 
     anchors.fill: parent
 
-    property bool vertical: false
     property bool vertical: main.vertical
 
     property int layoutType: main.layoutType
@@ -68,10 +67,10 @@ GridLayout {
                 family: temperatureText.font.family
                 weight: temperatureText.font.weight
                 italic: temperatureText.font.italic
-                pixelSize: iconAndText.vertical ? Kirigami.Units.gridUnit : widgetFontSize // random "big enough" size - this is used as a max pixelSize by the fontSizeMode
+                pixelSize: (main.onDesktop) ? Math.max(Kirigami.Units.gridUnit, widgetFontSize) : Math.min(Kirigami.Units.gridUnit, widgetFontSize) // random "big enough" size - this is used as a max pixelSize by the fontSizeMode
             }
             minimumPixelSize: Math.round(Kirigami.Units.gridUnit / 2)
-            fontSizeMode: iconAndText.vertical ? Text.HorizontalFit : Text.VerticalFit
+            fontSizeMode: main.onDesktop ? Text.Text.FixedSize : iconAndText.vertical ? Text.HorizontalFit : Text.VerticalFit
             wrapMode: Text.NoWrap
 
             horizontalAlignment: Text.AlignHCenter
@@ -89,7 +88,7 @@ GridLayout {
             visible: false
 
             // pattern to reserve some constant space TODO: improve and take formatting/i18n into account
-            text: "8888"
+            text: "888°"
         }
 
         PlasmaComponents.Label {
@@ -140,10 +139,10 @@ GridLayout {
                 family: compactWeatherIcon.font.family
                 weight: compactWeatherIcon.font.weight
                 italic: compactWeatherIcon.font.italic
-                pixelSize: iconAndText.vertical ? Kirigami.Units.gridUnit : widgetFontSize // random "big enough" size - this is used as a max pixelSize by the fontSizeMode
+                pixelSize: (main.onDesktop) ? Math.max(Kirigami.Units.gridUnit, widgetFontSize) : Math.min(Kirigami.Units.gridUnit, widgetFontSize) // random "big enough" size - this is used as a max pixelSize by the fontSizeMode
             }
             minimumPixelSize: Math.round(Kirigami.Units.gridUnit / 2)
-            fontSizeMode: iconAndText.vertical ? Text.HorizontalFit : Text.VerticalFit
+            fontSizeMode: main.onDesktop ? Text.Text.FixedSize : iconAndText.vertical ? Text.HorizontalFit : Text.VerticalFit
             wrapMode: Text.NoWrap
 
             horizontalAlignment: Text.AlignHCenter
