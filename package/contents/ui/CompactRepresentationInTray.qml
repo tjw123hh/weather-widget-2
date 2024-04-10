@@ -18,15 +18,17 @@ import QtQuick
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item {
+Loader {
     id: compactRepresentation
 
     anchors.fill: parent
 
     property int defaultWidgetSize: -1
 
-    CompactItem {
-        id: compactItem
+    sourceComponent: compactItemCompact
+
+    CompactItemCompact {
+        id: compactItemCompact
     }
 
     MouseArea {

@@ -53,6 +53,9 @@
         <entry name="widgetFontName" type="String">
             <default></default>
         </entry>
+        <entry name="showLastReloadedTime" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="widgetFontSize" type="Int">
             <default>32</default>
         </entry>

@@ -33,7 +33,10 @@ Item {
         id: dayTitleText
         text: dayTitle
         anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
         height: periodFontSize
+        horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignBottom
         fontSizeMode: Text.Fit
     }
