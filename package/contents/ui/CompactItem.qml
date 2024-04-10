@@ -31,6 +31,7 @@ GridLayout {
     anchors.fill: parent
 
     property bool vertical: false
+    property bool vertical: main.vertical
 
     property int layoutType: main.layoutType
 
