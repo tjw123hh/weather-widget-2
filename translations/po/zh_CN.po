@@ -261,7 +261,7 @@ msgstr ""
 
 #: ../../package/contents/ui/config/ConfigGeneral.qml
 msgid "Add Met.no Map Place"
-msgstr "添加 Met.no"
+msgstr "从 Met.no Map 添加地区"
 
 #: ../../package/contents/ui/config/ConfigGeneral.qml
 msgid "Search"
