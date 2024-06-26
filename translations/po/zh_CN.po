@@ -388,8 +388,8 @@ msgstr "in"
 msgid ""
 "Weather forecast data provided by The Norwegian Meteorological Institute."
 msgstr ""
-"天气预报数据由挪威气象研究所（The Norwegian Meteorological Institute）提供"
+"天气预报数据由挪威气象研究所（The Norwegian Meteorological Institute）提供。"
 
 #: ../../package/contents/ui/providers/OpenWeatherMap.qml
 msgid "Weather forecast data provided by OpenWeather."
-msgstr "天气预报数据由 OpenWeather 提供"
+msgstr "天气预报数据由 OpenWeather 提供。"
