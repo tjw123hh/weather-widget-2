@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../package/metadata.desktop
 msgid "Weather Widget 2"
-msgstr "天气小组件 2"
+msgstr "天气挂件 2"
 
 #: ../../package/metadata.desktop
 msgid "Plasmoid showing weather information from met.no server"
-msgstr "显示来自 Met.no 服务器的天气信息的 Plasma 小组件"
+msgstr "显示来自 Met.no 服务器的天气信息的 Plasma 挂件"
 
 #: ../../package/contents/code/data-loader.js
 msgid "%1 m"
@@ -118,7 +118,7 @@ msgstr "水平"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "NOTE: Setting layout type for in-tray plasmoid has no effect."
-msgstr "注意：设置布局类型在小组件处于托盘中时无效。"
+msgstr "注意：设置布局类型在挂件处于托盘中时无效。"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "Vertical"
@@ -130,7 +130,7 @@ msgstr "紧凑"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "In-Tray Settings"
-msgstr "托盘小组件设置"
+msgstr "托盘挂件设置"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "Active timeout:"
@@ -147,16 +147,16 @@ msgid ""
 "refreshed. You can always set the widget to be always \"Shown\" in system "
 "tray \"Entries\" settings."
 msgstr ""
-"注意：超时后，该小组件将在系统托盘中隐藏，直到刷新。您可以在系统托盘的“项"
-"目”设置中将小组件设置为“总是显示”确保它不隐藏。"
+"注意：超时后，该挂件将在系统托盘中隐藏，直到刷新。您可以在系统托盘的“项"
+"目”设置中将挂件设置为“总是显示”确保它不隐藏。"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "Widget font style:"
-msgstr "小组件字体样式："
+msgstr "挂件字体样式："
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "Widget font size:"
-msgstr "小组件字体大小："
+msgstr "挂件字体大小："
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgctxt "pixels"
