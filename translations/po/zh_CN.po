@@ -16,7 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"tjw123hh <tjw123hh@outlook.com>\n"
 "X-Generator: Poedit 2.3\n"
 
 #: ../../package/metadata.desktop
