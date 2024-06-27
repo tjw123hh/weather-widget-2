@@ -2,24 +2,19 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # 吴相东 <wuxiangdong156@gmail.com>, 2016.
-# tjw123hh <tjw123hh@outlook.com>, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
+"Project-Id-Version: weatherWidget-3\n"
 "Report-Msgid-Bugs-To: https://github.com/blackadderkate/weather-widget-2\n"
-"POT-Creation-Date: 2024-06-26 20:33+0800\n"
+"POT-Creation-Date: 2024-06-27 09:12+0800\n"
 "PO-Revision-Date: 2024-06-26 12:18+0000\n"
-"Last-Translator: tjw123hh <tjw123hh@outlook.com>\n"
-"Language-Team: 吴相东 <wuxiangdong156@gmail.com>\n"
+"Last-Translator: Tjw123hh <tjw123hh@outlook.com>\n"
+"Language-Team: Simplified Chinese <zh_CN@li.org>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Language: zh_CN\n"
-"X-Source-Language: C\n"
 
 #: ../../package/metadata.desktop
 msgid "Weather Widget 3"
@@ -45,48 +40,39 @@ msgstr "%1 天"
 msgid "hours"
 msgstr "时"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "°C"
 msgstr "摄氏度（℃）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "°F"
 msgstr "华氏度（℉）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "K"
 msgstr "开尔文（K）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "inHg"
 msgstr "英寸汞柱（inHg）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "mmHg"
 msgstr "百帕（hPa）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "hPa"
 msgstr "百帕（hPa）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "mph"
 msgstr "英里/时（mph）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "km/h"
 msgstr "千米/时（km/h）"
 
-#: ../../package/contents/code/unit-utils.js
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/code/unit-utils.js ../../package/contents/ui/config/ConfigUnits.qml
 msgid "m/s"
 msgstr "米/秒（m/s）"
 
@@ -145,13 +131,8 @@ msgid "sec"
 msgstr "秒"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
-msgid ""
-"NOTE: After this timeout widget will be hidden in system tray until "
-"refreshed. You can always set the widget to be always \"Shown\" in system "
-"tray \"Entries\" settings."
-msgstr ""
-"注意：超时后，该挂件将在系统托盘中隐藏，直到刷新。您可以在系统托盘的“项目”设"
-"置中将挂件设置为“总是显示”确保它不隐藏。"
+msgid "NOTE: After this timeout widget will be hidden in system tray until refreshed. You can always set the widget to be always \"Shown\" in system tray \"Entries\" settings."
+msgstr "注意：超时后，该挂件将在系统托盘中隐藏，直到刷新。您可以在系统托盘的“项目”设置中将挂件设置为“总是显示”确保它不隐藏。"
 
 #: ../../package/contents/ui/config/ConfigAppearance.qml
 msgid "Widget font style"
@@ -208,12 +189,8 @@ msgid "min"
 msgstr "分钟"
 
 #: ../../package/contents/ui/config/ConfigGeneral.qml
-msgid ""
-"Met.no weather forecast data provided by The Norwegian Meteorological "
-"Institute."
-msgstr ""
-"Met.no 天气预报数据由挪威气象研究所（The Norwegian Meteorological Institute）"
-"提供。"
+msgid "Met.no weather forecast data provided by The Norwegian Meteorological Institute."
+msgstr "Met.no 天气预报数据由挪威气象研究所（The Norwegian Meteorological Institute）提供。"
 
 #: ../../package/contents/ui/config/ConfigGeneral.qml
 msgid "Sunrise/sunset data provided by Sunrise - Sunset."
@@ -287,8 +264,7 @@ msgstr "Url"
 msgid "URL"
 msgstr "URL"
 
-#: ../../package/contents/ui/config/ConfigGeneral.qml
-#: ../../package/contents/ui/config/ConfigUnits.qml
+#: ../../package/contents/ui/config/ConfigGeneral.qml ../../package/contents/ui/config/ConfigUnits.qml
 msgid "Timezone"
 msgstr "时区"
 
@@ -340,9 +316,7 @@ msgstr "风速"
 msgid "My local-time"
 msgstr "我的本地时间"
 
-#: ../../package/contents/ui/config/ConfigUnits.qml
-#: ../../package/contents/ui/FullRepresentation.qml
-#: ../../package/contents/ui/providers/OpenWeatherMap.qml
+#: ../../package/contents/ui/config/ConfigUnits.qml ../../package/contents/ui/FullRepresentation.qml ../../package/contents/ui/providers/OpenWeatherMap.qml
 msgid "UTC"
 msgstr "协调世界时（UTC）"
 
@@ -350,13 +324,11 @@ msgstr "协调世界时（UTC）"
 msgid "Location Timezone"
 msgstr "位置所在时区"
 
-#: ../../package/contents/ui/FullRepresentationInTray.qml
-#: ../../package/contents/ui/FullRepresentation.qml
+#: ../../package/contents/ui/FullRepresentationInTray.qml ../../package/contents/ui/FullRepresentation.qml
 msgid "Next Location"
 msgstr "后一个位置"
 
-#: ../../package/contents/ui/FullRepresentationInTray.qml
-#: ../../package/contents/ui/FullRepresentation.qml
+#: ../../package/contents/ui/FullRepresentationInTray.qml ../../package/contents/ui/FullRepresentation.qml
 msgid "Reload"
 msgstr "刷新"
 
@@ -385,10 +357,8 @@ msgid "in"
 msgstr "in"
 
 #: ../../package/contents/ui/providers/MetNo.qml
-msgid ""
-"Weather forecast data provided by The Norwegian Meteorological Institute."
-msgstr ""
-"天气预报数据由挪威气象研究所（The Norwegian Meteorological Institute）提供。"
+msgid "Weather forecast data provided by The Norwegian Meteorological Institute."
+msgstr "天气预报数据由挪威气象研究所（The Norwegian Meteorological Institute）提供。"
 
 #: ../../package/contents/ui/providers/OpenWeatherMap.qml
 msgid "Weather forecast data provided by OpenWeather."
